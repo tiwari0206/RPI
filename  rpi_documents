@@ -163,5 +163,8 @@ AVD
 
 HW- rpi3 rpi4(optional) wireless-gamepad 
 ================================================================================================
+find ./meta* -name westeros*.bb*
+================================================================================================
 
- 
+\\\\\\\\POKY STABLE IMAGE\\\\\\\\\\
+https://tutorialadda.com/yocto/create-your-own-linux-image-for-the-raspberry-pi-board-using-yocto-project
