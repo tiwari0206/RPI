@@ -1,0 +1,167 @@
+https://wiki.yoctoproject.org/wiki/Technical_FAQ
+https://elinux.org/Bitbake_Cheat_Sheet
+https://wiki.rdkcentral.com/display/public/RDK/RDK-V+Components
+
+================================================================================================
+
+************build instructions for stable 2 image***********************
+mkdir ~/bin 
+
+PATH=~/bin:$PATH 
+
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo 
+
+chmod a+x ~/bin/repo 
+
+repo init -u ssh://gerrit.teamccp.com:29418/rdk/yocto_oe/manifests/raspberrypi-manifest  -b stable2 -m raspberrypi-rdk-cmc.xml --repo-url=ssh://gerrit.teamccp.com:29418/rdk/tools/git-repo --no-repo-verify -g all
+
+repo sync --no-tags
+ 
+source meta-rdk/setup-environment (select raspberrypi-rdk-cmc.conf)
+
+bitbake comcast-mediaclient-vbn-image
+================================================================================================
+
+cat .netrc file ==> to get credentials
+================================================================================================
+  
+https://wiki.rdkcentral.com/display/RDK/RDKServices+Plugin+Template
+https://github.com/rdkcentral/ThunderNanoServices
+https://github.com/rdkcentral/rdkservices
+
+  
+================================================================================================
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\RDKV\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
+
+We have created docker container(both yocto2 and yocto3(dunfell)) for you. 
+
+IMPORTANT : Please start your build from container , not from dvm. 
+
+Please find the VM details below :- 
+
+IP: 96.116.234.168 
+
+Yocto2 Container name : yocto2-nmisra645 
+
+Yocto3 Container name : yocto3-nmisra645 
+
+  
+
+\\\\\\\\\\\\\\\Please follow below steps to access container. \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+1)DVM access has been given to misra, nirmalya via Autobhan. 
+
+Please use the following documentation for installation of autobahn on your local machine 
+
+https://security.sys.comcast.net/How_Do_I/Project_Autobahn/FAQ.md 
+
+Use $jump -i and $jump nmisra645@96.116.234.168 
+
+  
+  
+
+2) Start container 
+
+For Yocto2 : $sudo docker start yocto2-nmisra645 
+
+For Yocto3 : $sudo docker start yocto3-nmisra645 
+
+  
+
+
+3) Access container 
+
+For yocto2: $sudo docker exec -it --user nmisra645 --workdir=/home/nmisra645 yocto2-nmisra645 /bin/bash 
+
+For yocto3: $sudo docker exec -it --user nmisra645 --workdir=/home/nmisra645 yocto3-nmisra645 /bin/bash 
+
+  
+  
+
+Please find below document for docker related queries 
+
+https://etwiki.sys.comcast.net/display/RDKDocumentation/RDK+Docker+DVM+FAQ 
+
+  
+
+
+Follow the below document for initial git/gerrit setup 
+
+https://etwiki.sys.comcast.net/display/CE/Yocto+%3A+Setup%2C+Build+and+Debug#Yocto:Setup,BuildandDebug-GITinitialsetupinyourmachineandcheckoutfromComcastGerritserver. 
+
+  
+  
+
+Please note , your account is on a shared development VM and please restrict your usage to 300 GB. 
+
+Also note that we don't provide backups for build VMs, keeping code and settings in safe is sole developer responsibility. The purpose of build machine is to help quickly build bulk builds. 
+
+Please refer: https://etwiki.sys.comcast.net/display/RDKDocumentation/RDKSCM+-+Openstack+Build+VM+Frequently+Asked+Questions 
+
+  
+
+  
+
+mkdir ~/bin 
+
+PATH=~/bin:$PATH 
+
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo 
+
+chmod a+x ~/bin/repo 
+
+
+1. repo init -u ssh://gerrit.teamccp.com:29418/rdk/yocto_oe/manifests/raspberrypi-manifest  -b stable2 -m raspberrypi-rdk-cmc.xml --repo-url=ssh://gerrit.teamccp.com:29418/rdk/tools/git-repo --no-repo-verify -g all 
+
+  
+
+2. repo sync --no-tags (fetch recip files and meta layer from the server) 
+
+  
+
+3. source meta-rdk/setup-environment (select raspberrypi-rdk-cmc.conf) 
+
+(it will give options of HW) 
+
+4.bitbake comcast-mediaclient-vbn-image 
+
+(build image) 
+
+core-image-minimal 
+
+core-image-sato 
+
+  
+
+5.Continuing from point 3, build folder will be created, inside that local.conf(choose features you want) and bblayers.conf(metalayer info, choose layers you want) 
+
+  
+
+meta-layer contains recipe files 
+
+each recipe file contains component and will tell where to retrive and store 
+
+  
+
+6.  bitbake <component-name> 
+
+    bitbake <component-name> -c compile -f (only performs compilation) 
+
+  
+
+ntid 
+
+  
+
+jenkins 
+
+gerrit 
+
+dev VM 
+
+AVD 
+
+HW- rpi3 rpi4(optional) wireless-gamepad 
+================================================================================================
+
+ 
